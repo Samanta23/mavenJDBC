@@ -7,6 +7,8 @@ package org.unitec;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+//agregar esta libreria
+import java.sql.*;
 
 /**
  *
@@ -94,7 +96,23 @@ public class VentanaFacil extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            ModeloConexion.conectarse("root", "");
+            
+            
+            //OPERACIONES CON JDBC
+            //HAREMOS UNA INSERCION CON JDBC
+            //A LA TABLA FACIL
+            //PASO 1 CREAR UN OBJETO DE TIPO CONEXION 
+            Connection con=ModeloConexion.conectarse("root", "");
+            //paso 2 con esa conexion invocar un statement preparado
+               PreparedStatement st=con.prepareStatement("insert into FACIL (nombre,edad) values(?,?)");
+                st.setString(1, textoNombre.getText());
+                //lo de integer parse int es el casting
+                st.setInt(2, Integer.parseInt(textoEdad.getText()));
+                st.execute();
+                etiquetaInformacion.setText("Registro insertado");
+            
+            
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             
